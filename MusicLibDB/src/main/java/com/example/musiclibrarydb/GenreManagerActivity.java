@@ -166,7 +166,7 @@ public class GenreManagerActivity extends AppCompatActivity {
 
 
     String readSpinner(){
-        String selectedItem="NULL";
+        String selectedItem="";
         if(spnGenres.getSelectedItem() != null){
             selectedItem = spnGenres.getSelectedItem().toString();
         }

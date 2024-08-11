@@ -198,7 +198,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, artist.getName());
-        values.put(KEY_GENRE_ID, getGenreID(artist.getGenre()));//nad objektom artist pozovem getGenre koji vrati String genre prema kome se nadje ID tog zanra
+        values.put(KEY_GENRE_ID, artist.getGenre_id());//nad objektom artist pozovem getGenre koji vrati String genre prema kome se nadje ID tog zanra
 
         // insert row
         long artist_id = db.insert(TABLE_ARTISTS, null, values);
@@ -355,6 +355,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //bice ovde jos da se doda pribavljanje svih pesama kao i pribavljanje svih zanrova, izvodjaca i odgovarajucih plejlista za datog korisnitka po USER_IDu
 
 
+
+    //----------------------------------------------------------------------------------------------
+    //------------------------------------------------------------- GET ALL ------------------------
+
     public ArrayList<User> getAllUsers(){
         ArrayList<User> users = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_USERS;
@@ -378,6 +382,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+
     public ArrayList<Artist> getAllArtists(){
         ArrayList<Artist> artists = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_ARTISTS;
@@ -391,6 +396,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 Artist a = new Artist();
                 a.setId(c.getInt(c.getColumnIndex(KEY_ID)));
                 a.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+                a.setGenre_id(c.getLong(c.getColumnIndex(KEY_GENRE_ID)));
 
                 artists.add(a);
             } while (c.moveToNext());
@@ -399,6 +405,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return artists;
 
     }
+
 
     public ArrayList<Genre> getAllGenres(){
         ArrayList<Genre> genres = new ArrayList<>();
@@ -422,6 +429,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+
+    //----------------------------------------------------------------------------------------------
     //------------------------------------------------------------- UPDATE -------------------------
 
     public int updateGenre(Genre genre){
@@ -433,6 +442,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[] { String.valueOf(genre.getId()) }); //ID OSTAJE ISTI JER JE VEC RANIJE PRI CITANJU IZ TABELE UNET U OBJEKAT? ZATO MENJA PREKO ID-a
 
     }
+
+
+
+    //----------------------------------------------------------------------------------------------
+    //------------------------------------------------------------- REMOVE -------------------------
 
     public void removeGenre(long g_id){
         db.delete(TABLE_GENRES, KEY_ID + " = ?",

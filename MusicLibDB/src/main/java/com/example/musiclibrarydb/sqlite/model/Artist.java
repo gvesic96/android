@@ -4,7 +4,7 @@ public class Artist {
 
     long id;
     String name;
-    String genre;
+    long genre_id;
 
     public Artist(){
 
@@ -27,9 +27,9 @@ public class Artist {
 
     public void setName(String name){this.name=name;}
 
-    public String getGenre(){return genre;}
+    public long getGenre_id(){return genre_id;}
 
-    public void setGenre(String genre){this.genre=genre;}
+    public void setGenre_id(long genre_id){this.genre_id = genre_id;}
 
 
 }

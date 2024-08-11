@@ -74,7 +74,8 @@ public class SelectorActivity extends AppCompatActivity {
         btnArtistManager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnSongManager.setText(username+id);
+                //btnSongManager.setText(username+id);
+                goToArtistManagerActivity();
             }
         });
 
@@ -124,6 +125,15 @@ public class SelectorActivity extends AppCompatActivity {
         Intent intentGenreManager = new Intent(SelectorActivity.this, GenreManagerActivity.class);
 
         activity2Launcher.launch(intentGenreManager);
+
+
+    }
+
+    public void goToArtistManagerActivity() {
+
+        Intent intentArtistManager = new Intent(SelectorActivity.this, ArtistManagerActivity.class);
+
+        activity2Launcher.launch(intentArtistManager);
 
 
     }
