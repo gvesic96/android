@@ -77,12 +77,8 @@ public class ArtistManagerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(spnAvailableGenres.getSelectedItem() != null) {
-                    Artist a = new Artist();
-                    a.setName(etAddArtist.getText().toString());
-                    a.setGenre_id(getGenreID(spnAvailableGenres.getSelectedItem().toString()));
-                    databaseHandler.createArtist(a);
-                    allArtists=databaseHandler.getAllArtists();
-                    loadArtistSpinner(allArtists);
+                    addArtist();
+                    etAddArtist.setText("");
                 }
 
             }
@@ -92,8 +88,8 @@ public class ArtistManagerActivity extends AppCompatActivity {
         spnArtists.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedGenre = readSpinner(spnArtists);
-                etEditArtist.setText(selectedGenre);
+                String selectedArtist = readSpinner(spnArtists);
+                etEditArtist.setText(selectedArtist);
             }
 
             @Override
@@ -101,6 +97,43 @@ public class ArtistManagerActivity extends AppCompatActivity {
 
             }
         });
+
+        //editing artist's name
+        btnEditArtist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(spnArtists.getSelectedItem() != null) {
+                    String newAName = etEditArtist.getText().toString();
+                    String oldAName = readSpinner(spnArtists);
+
+                    for(Artist el : allArtists){
+                        if(el.getName().equals(oldAName)){
+                            el.setName(newAName);
+                            databaseHandler.updateArtist(el);
+                            allArtists = databaseHandler.getAllArtists();
+                            loadArtistSpinner(allArtists);
+                        }
+                    }
+                }
+            }
+        });
+
+
+        btnRemoveArtist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String removeAName = readSpinner(spnArtists);
+                for(Artist el:allArtists){
+                    if(el.getName().equals(removeAName)) {
+                        databaseHandler.removeArtist(el.getId());
+                        allArtists = databaseHandler.getAllArtists();
+                        loadArtistSpinner(allArtists);
+                    }
+                }
+
+            }
+        });
+
 
         btnBackArtist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,9 +178,12 @@ public class ArtistManagerActivity extends AppCompatActivity {
     void addArtist(){
         Artist a = new Artist();
         a.setName(etAddArtist.getText().toString());
-
+        a.setGenre_id(getGenreID(spnAvailableGenres.getSelectedItem().toString()));
         databaseHandler.createArtist(a);
 
+        //refresh all artists list
+        allArtists=databaseHandler.getAllArtists();
+        loadArtistSpinner(allArtists);
     }
 
     void loadGenreSpinner(ArrayList<Genre> genres){

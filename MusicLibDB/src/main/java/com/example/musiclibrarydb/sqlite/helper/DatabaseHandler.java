@@ -443,7 +443,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+    public int updateArtist(Artist artist){
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, artist.getName());//menjam KEY_NAME odnosno naziv artista
 
+        // updating row
+        return db.update(TABLE_ARTISTS, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(artist.getId()) }); //ID OSTAJE ISTI JER JE VEC RANIJE PRI CITANJU IZ TABELE UNET U OBJEKAT? ZATO MENJA PREKO ID-a
+
+    }
 
     //----------------------------------------------------------------------------------------------
     //------------------------------------------------------------- REMOVE -------------------------
@@ -452,6 +460,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.delete(TABLE_GENRES, KEY_ID + " = ?",
                 new String[] { String.valueOf(g_id)});
     }
+
+    public void removeArtist(long a_id){
+        db.delete(TABLE_ARTISTS, KEY_ID + " = ?",
+                new String[] { String.valueOf(a_id)});
+    }
+
+
+
+
 
     // closing database
     public void closeDB() {
