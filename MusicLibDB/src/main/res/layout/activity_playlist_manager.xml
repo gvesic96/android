@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PlaylistManagerActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvPlaylistManager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Playlist Manager"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.065"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.116" />
+
+        <TextView
+            android:id="@+id/tvSelectPlaylist"
+            android:layout_width="46dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:text="Select playlist:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/spnPlaylists" />
+
+        <Spinner
+            android:id="@+id/spnPlaylists"
+            android:layout_width="210dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toEndOf="@+id/tvSelectPlaylist"
+            app:layout_constraintTop_toBottomOf="@+id/tvPlaylistManager" />
+
+        <Button
+            android:id="@+id/btnRemovePlaylist"
+            android:layout_width="98dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            android:text="Remove"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/spnPlaylists"
+            app:layout_constraintTop_toTopOf="@+id/spnPlaylists" />
+
+        <EditText
+            android:id="@+id/etEditAddPlaylist"
+            android:layout_width="259dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="44dp"
+            android:ems="10"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spnPlaylists" />
+
+        <Button
+            android:id="@+id/btnEditPlaylist"
+            android:layout_width="98dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="16dp"
+            android:text="Edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/etEditAddPlaylist"
+            app:layout_constraintTop_toBottomOf="@+id/spnPlaylists" />
+
+        <Button
+            android:id="@+id/btnBackPlaylist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="BACK"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btnRemoveSongPL"
+            app:layout_constraintHorizontal_bias="0.99"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnRemoveSongPL"
+            app:layout_constraintVertical_bias="0.673" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="4dp"
+            android:text="Edit PL name or add PL:"
+            app:layout_constraintBottom_toTopOf="@+id/etEditAddPlaylist"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spnPlaylists"
+            app:layout_constraintVertical_bias="0.59" />
+
+        <Spinner
+            android:id="@+id/spnGenresPL"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toStartOf="@+id/spnArtistsPL"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tvGenres"
+            app:layout_constraintTop_toBottomOf="@+id/tvGenres" />
+
+        <Spinner
+            android:id="@+id/spnArtistsPL"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tvArtists"
+            app:layout_constraintTop_toBottomOf="@+id/tvArtists" />
+
+        <TextView
+            android:id="@+id/tvGenres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="28dp"
+            android:text="Available Genres:"
+            app:layout_constraintEnd_toStartOf="@+id/tvArtists"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etEditAddPlaylist" />
+
+        <Spinner
+            android:id="@+id/spnAvailableSongsPL"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSongs" />
+
+        <TextView
+            android:id="@+id/tvArtists"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="88dp"
+            android:text="Available Artists:"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etEditAddPlaylist" />
+
+        <TextView
+            android:id="@+id/tvSongs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Available Songs:"
+            app:layout_constraintTop_toBottomOf="@+id/spnGenresPL"
+            tools:layout_editor_absoluteX="24dp" />
+
+        <Button
+            android:id="@+id/btnPutSong"
+            android:layout_width="116dp"
+            android:layout_height="62dp"
+            android:layout_marginStart="16dp"
+            android:text="Put Song into PL"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/spnAvailableSongsPL"
+            app:layout_constraintTop_toTopOf="@+id/spnAvailableSongsPL" />
+
+        <Button
+            android:id="@+id/btnAddPlaylist"
+            android:layout_width="98dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="12dp"
+            android:text="add"
+            app:layout_constraintBottom_toTopOf="@+id/btnEditPlaylist"
+            app:layout_constraintEnd_toEndOf="@+id/btnEditPlaylist"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/btnEditPlaylist"
+            app:layout_constraintTop_toBottomOf="@+id/btnRemovePlaylist"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tvRemoveSongPL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Songs in selected playlist:"
+            app:layout_constraintTop_toBottomOf="@+id/spnAvailableSongsPL"
+            tools:layout_editor_absoluteX="24dp" />
+
+        <Spinner
+            android:id="@+id/spnSongsInPL"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/btnRemoveSongPL"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tvRemoveSongPL"
+            app:layout_constraintTop_toBottomOf="@+id/tvRemoveSongPL" />
+
+        <Button
+            android:id="@+id/btnRemoveSongPL"
+            android:layout_width="112dp"
+            android:layout_height="62dp"
+            android:layout_marginTop="44dp"
+            android:text="Remove Song"
+            app:layout_constraintEnd_toEndOf="@+id/btnPutSong"
+            app:layout_constraintStart_toStartOf="@+id/btnPutSong"
+            app:layout_constraintTop_toBottomOf="@+id/btnPutSong" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
