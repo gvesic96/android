@@ -33,6 +33,8 @@ public class SelectorActivity extends AppCompatActivity {
     DatabaseHandler databaseHandler;
 
     public static String LOGOUT_MESSAGE = "LOGOUT";
+    public static String USER_ID_MESSAGE = "USER_ID";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +86,13 @@ public class SelectorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 goToSongManagerActivity();
+            }
+        });
+
+        btnPlaylistManager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToPlaylistManagerActivity();
             }
         });
 
@@ -150,6 +159,15 @@ public class SelectorActivity extends AppCompatActivity {
         Intent intentSongManager = new Intent(SelectorActivity.this, SongManagerActivity.class);
 
         activity2Launcher.launch(intentSongManager);
+
+
+    }
+
+    public void goToPlaylistManagerActivity() {
+
+        Intent intentPlaylistManager = new Intent(SelectorActivity.this, PlaylistManagerActivity.class);
+        intentPlaylistManager.putExtra(USER_ID_MESSAGE, SelectorActivity.this.id);
+        activity2Launcher.launch(intentPlaylistManager);
 
 
     }

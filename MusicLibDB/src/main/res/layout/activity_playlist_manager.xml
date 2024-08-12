@@ -50,8 +50,8 @@
 
         <Button
             android:id="@+id/btnRemovePlaylist"
-            android:layout_width="98dp"
-            android:layout_height="45dp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="16dp"
             android:text="Remove"
@@ -73,8 +73,8 @@
 
         <Button
             android:id="@+id/btnEditPlaylist"
-            android:layout_width="98dp"
-            android:layout_height="45dp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:layout_marginTop="64dp"
             android:layout_marginEnd="16dp"
             android:text="Edit"
@@ -165,24 +165,25 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Available Songs:"
-            app:layout_constraintTop_toBottomOf="@+id/spnGenresPL"
-            tools:layout_editor_absoluteX="24dp" />
+            app:layout_constraintStart_toStartOf="@+id/spnGenresPL"
+            app:layout_constraintTop_toBottomOf="@+id/spnGenresPL" />
 
         <Button
-            android:id="@+id/btnPutSong"
+            android:id="@+id/btnPutSongPL"
             android:layout_width="116dp"
             android:layout_height="62dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="44dp"
             android:text="Put Song into PL"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/spnAvailableSongsPL"
-            app:layout_constraintTop_toTopOf="@+id/spnAvailableSongsPL" />
+            app:layout_constraintTop_toBottomOf="@+id/spnGenresPL" />
 
         <Button
             android:id="@+id/btnAddPlaylist"
-            android:layout_width="98dp"
-            android:layout_height="45dp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:layout_marginTop="12dp"
             android:text="add"
             app:layout_constraintBottom_toTopOf="@+id/btnEditPlaylist"
@@ -198,8 +199,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:text="Songs in selected playlist:"
-            app:layout_constraintTop_toBottomOf="@+id/spnAvailableSongsPL"
-            tools:layout_editor_absoluteX="24dp" />
+            app:layout_constraintStart_toStartOf="@+id/spnAvailableSongsPL"
+            app:layout_constraintTop_toBottomOf="@+id/spnAvailableSongsPL" />
 
         <Spinner
             android:id="@+id/spnSongsInPL"
@@ -215,11 +216,12 @@
             android:id="@+id/btnRemoveSongPL"
             android:layout_width="112dp"
             android:layout_height="62dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="52dp"
             android:text="Remove Song"
-            app:layout_constraintEnd_toEndOf="@+id/btnPutSong"
-            app:layout_constraintStart_toStartOf="@+id/btnPutSong"
-            app:layout_constraintTop_toBottomOf="@+id/btnPutSong" />
+            app:layout_constraintEnd_toEndOf="@+id/btnPutSongPL"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/btnPutSongPL"
+            app:layout_constraintTop_toBottomOf="@+id/btnPutSongPL" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -273,8 +273,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         //ova metoda
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, playlist.getName());
-
-        values.put(KEY_USER_ID, getUserID(playlist.getUserName()));
+        values.put(KEY_USER_ID, playlist.getUser_id());
+        //values.put(KEY_USER_ID, getUserID(playlist.getUserName()));
 
         // insert row
         long playlist_id = db.insert(TABLE_PLAYLISTS, null, values);
@@ -448,6 +448,29 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         }
         return genres;
+
+    }
+
+    public ArrayList<Playlist> getAllPlaylists(long user_id){
+        ArrayList<Playlist> playlists = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_PLAYLISTS + " WHERE " + KEY_USER_ID + "=" + user_id;
+
+        Log.e(LOG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if(c.moveToFirst()){
+            do{
+                Playlist p = new Playlist();
+                p.setId(c.getInt(c.getColumnIndex(KEY_ID)));//OVDE POSTAVIM ID U OBJEKTU U AKTIVNOSTI I POSLE MI JE DOVOLJNO DA PREKO IDa UPDATUJEM
+                p.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+                p.setUser_id(c.getLong(c.getColumnIndex(KEY_USER_ID)));
+
+                playlists.add(p);
+            } while (c.moveToNext());
+
+        }
+        return playlists;
 
     }
 
