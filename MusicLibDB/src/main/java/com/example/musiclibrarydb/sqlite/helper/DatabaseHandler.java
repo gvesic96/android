@@ -217,8 +217,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         //nedostaje mi metoda koja pribavlja artist ili genre preko SELECT rada sa bazom gde je upit artistName ili genreType
 
-        values.put(KEY_ARTIST_ID, getArtistID(song.getArtist()));
-        values.put(KEY_GENRE_ID, getGenreID(song.getGenre()));
+        values.put(KEY_ARTIST_ID, song.getArtist_id());
+        //values.put(KEY_GENRE_ID, getGenreID(song.getGenre()));
 
         // insert row
         long song_id = db.insert(TABLE_SONGS, null, values);
@@ -382,6 +382,28 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+    public ArrayList<Song> getAllSongs(){
+        ArrayList<Song> songs = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_SONGS;
+
+        Log.e(LOG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if(c.moveToFirst()){
+            do{
+                Song s = new Song();
+                s.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                s.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+                s.setArtist_id(c.getLong(c.getColumnIndex(KEY_ARTIST_ID)));
+
+                songs.add(s);
+            } while (c.moveToNext());
+
+        }
+        return songs;
+
+    }
 
     public ArrayList<Artist> getAllArtists(){
         ArrayList<Artist> artists = new ArrayList<>();
@@ -453,6 +475,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+    public int updateSong(Song song){
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, song.getName());//menjam KEY_NAME odnosno naziv artista
+
+        // updating row
+        return db.update(TABLE_SONGS, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(song.getId()) }); //ID OSTAJE ISTI JER JE VEC RANIJE PRI CITANJU IZ TABELE UNET U OBJEKAT? ZATO MENJA PREKO ID-a
+
+    }
+
     //----------------------------------------------------------------------------------------------
     //------------------------------------------------------------- REMOVE -------------------------
 
@@ -466,8 +498,65 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[] { String.valueOf(a_id)});
     }
 
+    public void removeSong(long s_id){
+        db.delete(TABLE_SONGS, KEY_ID + " = ?",
+                new String[] { String.valueOf(s_id)});
+    }
 
+    //----------------------------------------------------------------------------------------------
+    //------------------------------------------------------------- GET SINGLE ELEMENT -------------
 
+    public Artist getArtist(long artist_id){
+
+        String selectQuery = "SELECT  * FROM " + TABLE_ARTISTS + " WHERE "
+                + KEY_ID + " = " + artist_id;
+        //Alternative to use selectionArgs in rawQuery
+        //String selectQuery = "SELECT  * FROM " + TABLE_ACTORS + " WHERE "
+        //        + KEY_ID + " = ?";
+
+        Log.e(LOG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        //If using selectionArgs, the number of passed strings must match the number of ? characters
+        //within selectQuery string
+        //Cursor c = db.rawQuery(selectQuery, new String[]{Long.toString(actor_id)});
+
+        if (c != null)
+            c.moveToFirst();
+
+        //create actor based on data read from a database
+        Artist a = new Artist();
+        a.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+        a.setName((c.getString(c.getColumnIndex(KEY_NAME))));
+        a.setGenre_id((c.getLong(c.getColumnIndex(KEY_GENRE_ID))));
+        return a;
+    }
+
+    public Genre getGenre(long genre_id){
+
+        String selectQuery = "SELECT  * FROM " + TABLE_GENRES + " WHERE "
+                + KEY_ID + " = " + genre_id;
+        //Alternative to use selectionArgs in rawQuery
+        //String selectQuery = "SELECT  * FROM " + TABLE_ACTORS + " WHERE "
+        //        + KEY_ID + " = ?";
+
+        Log.e(LOG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        //If using selectionArgs, the number of passed strings must match the number of ? characters
+        //within selectQuery string
+        //Cursor c = db.rawQuery(selectQuery, new String[]{Long.toString(actor_id)});
+
+        if (c != null)
+            c.moveToFirst();
+
+        //create actor based on data read from a database
+        Genre g = new Genre();
+        g.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+        g.setName((c.getString(c.getColumnIndex(KEY_NAME))));
+
+        return g;
+    }
 
 
     // closing database

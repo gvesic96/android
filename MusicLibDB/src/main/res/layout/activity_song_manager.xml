@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SongManagerActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvSongManager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Song Manager"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.065"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.116" />
+
+        <TextView
+            android:id="@+id/tvSelectSong"
+            android:layout_width="46dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:text="Select song:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/spnSongs" />
+
+        <Spinner
+            android:id="@+id/spnSongs"
+            android:layout_width="210dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintStart_toEndOf="@+id/tvSelectSong"
+            app:layout_constraintTop_toBottomOf="@+id/tvSongManager" />
+
+        <Button
+            android:id="@+id/btnRemoveSong"
+            android:layout_width="98dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            android:text="Remove"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/spnSongs"
+            app:layout_constraintTop_toTopOf="@+id/spnSongs" />
+
+        <EditText
+            android:id="@+id/etEditSong"
+            android:layout_width="259dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="76dp"
+            android:ems="10"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spnSongs" />
+
+        <Button
+            android:id="@+id/btnEditSong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="16dp"
+            android:text="Edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.944"
+            app:layout_constraintStart_toEndOf="@+id/etEditSong"
+            app:layout_constraintTop_toBottomOf="@+id/spnSongs" />
+
+        <EditText
+            android:id="@+id/etAddSong"
+            android:layout_width="259dp"
+            android:layout_height="58dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="60dp"
+            android:ems="10"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etEditSong" />
+
+        <Button
+            android:id="@+id/btnAddSong"
+            android:layout_width="87dp"
+            android:layout_height="180dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="68dp"
+            android:text="add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.157"
+            app:layout_constraintStart_toEndOf="@+id/etAddSong"
+            app:layout_constraintTop_toBottomOf="@+id/btnEditSong" />
+
+        <Button
+            android:id="@+id/btnBackSong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="140dp"
+            android:text="BACK"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.943"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etAddSong"
+            app:layout_constraintVertical_bias="0.397" />
+
+        <Spinner
+            android:id="@+id/spnAvailableArtists"
+            android:layout_width="259dp"
+            android:layout_height="62dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/etAddSong"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etAddSong" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="4dp"
+            android:text="Edit song name:"
+            app:layout_constraintBottom_toTopOf="@+id/etEditSong"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="Type new song name and pick artist:"
+            app:layout_constraintBottom_toTopOf="@+id/etAddSong"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvGenre"
+            android:layout_width="245dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="16dp"
+            android:text="Artist genre"
+            app:layout_constraintEnd_toEndOf="@+id/spnAvailableArtists"
+            app:layout_constraintHorizontal_bias="0.571"
+            app:layout_constraintStart_toStartOf="@+id/spnAvailableArtists"
+            app:layout_constraintTop_toBottomOf="@+id/spnAvailableArtists" />
+
+        <TextView
+            android:id="@+id/tvSong"
+            android:layout_width="315dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="12dp"
+            android:text="Song name, artist, genre"
+            app:layout_constraintEnd_toEndOf="@+id/btnRemoveSong"
+            app:layout_constraintStart_toStartOf="@+id/spnSongs"
+            app:layout_constraintTop_toBottomOf="@+id/spnSongs" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

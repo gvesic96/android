@@ -6,8 +6,7 @@ public class Song {
     //OVAKO SE POLJIMA MOZE PRISTUPITI IZ ISTOG PACKAGE-a STO JE RAZLIKA U ODNOSU NA PRIVATE !!!!!!
     long id;
     String name;
-    String genre;
-    String artist;
+    long artist_id;
 
     //Public konstruktor bez parametara za kreiranje reference
     public Song(){
@@ -15,25 +14,23 @@ public class Song {
     }
 
     //konstruktor sa parametrima cime cu kreirati odgovarajuci objekat
-    public Song(String name, String genre, String artist){
+    public Song(String name,  long artist_id){
         this.name = name;
-        this.artist = artist;
-        this.genre = genre;
+        this.artist_id = artist_id;
 
     }
 
     //ZASTO JE OVAJ KONSTRUKTOR DRUGACIJI??????? SA I BEZ ID???????????????
-    public Song(long id, String name, String artist, String genre){
+    public Song(long id, String name, long artist_id){
         this.id = id;
         this.name = name;
-        this.artist = artist;
-        this.genre = genre;
+        this.artist_id = artist_id;
+
     }
 
     public void setId(long id) {
         this.id = id;
     }
-
     public long getId(){
         return this.id;
     }
@@ -45,20 +42,12 @@ public class Song {
         return this.name;
     }
 
-    public void setGenre(String genre){
-        this.genre=genre;
+    public void setArtist_id(long artist_id) {
+        this.artist_id = artist_id;
+    }
+    public long getArtist_id(){
+        return this.artist_id;
     }
 
-    public String getGenre(){
-        return this.genre;
-    }
-
-    public void setArtist(String artist){
-        this.artist=artist;
-    }
-
-    public String getArtist(){
-        return this.artist;
-    }
 
 }

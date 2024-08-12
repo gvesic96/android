@@ -80,6 +80,13 @@ public class SelectorActivity extends AppCompatActivity {
         });
 
 
+        btnSongManager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToSongManagerActivity();
+            }
+        });
+
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +141,15 @@ public class SelectorActivity extends AppCompatActivity {
         Intent intentArtistManager = new Intent(SelectorActivity.this, ArtistManagerActivity.class);
 
         activity2Launcher.launch(intentArtistManager);
+
+
+    }
+
+    public void goToSongManagerActivity() {
+
+        Intent intentSongManager = new Intent(SelectorActivity.this, SongManagerActivity.class);
+
+        activity2Launcher.launch(intentSongManager);
 
 
     }
