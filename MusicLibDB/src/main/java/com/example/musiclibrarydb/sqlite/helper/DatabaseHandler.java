@@ -214,11 +214,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         //ako se pri kreiranju prosledjuje objekat song on u sebi sadrzi stringove koji su genre i artist, treba po stringovima pretraziti tabele i uzeti id???
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, song.getName());
-
-        //nedostaje mi metoda koja pribavlja artist ili genre preko SELECT rada sa bazom gde je upit artistName ili genreType
-
         values.put(KEY_ARTIST_ID, song.getArtist_id());
-        //values.put(KEY_GENRE_ID, getGenreID(song.getGenre()));
+        values.put(KEY_GENRE_ID, song.getGenre_id());
 
         // insert row
         long song_id = db.insert(TABLE_SONGS, null, values);
@@ -229,42 +226,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-    //get Genre ID for specified passed genre type (String) from an song or artist object
-
-    public long getGenreID(String genreType){
-
-        String selectQuery = "SELECT * FROM " + TABLE_GENRES + " WHERE "
-                + KEY_NAME + "=" + genreType;
-
-        Log.e(LOG, selectQuery);
-        Cursor c = db.rawQuery(selectQuery, null);
-        if (c != null)
-            c.moveToFirst();
-
-        //create actor based on data read from a database
-        long fetchedID = 1;
-        fetchedID = c.getInt(c.getColumnIndex(KEY_ID));
-
-        return fetchedID;
-    }
-
-    public long getArtistID(String artistName){
-
-        String selectQuery = "SELECT * FROM " + TABLE_ARTISTS + " WHERE "
-                + KEY_NAME + "=" + artistName;
-
-        Log.e(LOG, selectQuery);
-        Cursor c = db.rawQuery(selectQuery, null);
-        if (c != null)
-            c.moveToFirst();
-
-        //create actor based on data read from a database
-        long fetchedID = 1;
-        fetchedID = c.getInt(c.getColumnIndex(KEY_ID));
-
-        return fetchedID;
-    }
-
 
     /*
      * Creating a playlist
@@ -274,7 +235,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, playlist.getName());
         values.put(KEY_USER_ID, playlist.getUser_id());
-        //values.put(KEY_USER_ID, getUserID(playlist.getUserName()));
 
         // insert row
         long playlist_id = db.insert(TABLE_PLAYLISTS, null, values);
@@ -283,22 +243,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return playlist_id;
     }
 
-    public long getUserID(String userName){
-
-        String selectQuery = "SELECT * FROM " + TABLE_USERS + " WHERE "
-                + KEY_NAME + "=" + userName;
-
-        Log.e(LOG, selectQuery);
-        Cursor c = db.rawQuery(selectQuery, null);
-        if (c != null)
-            c.moveToFirst();
-
-
-        long fetchedID = 1;
-        fetchedID = c.getInt(c.getColumnIndex(KEY_ID));
-
-        return fetchedID;
-    }
 
     /*
      * Creating a playlist entry - 1 entry is one row in PLAYLIST_ENTRIES TABLE
@@ -396,7 +340,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 s.setId(c.getInt(c.getColumnIndex(KEY_ID)));
                 s.setName(c.getString(c.getColumnIndex(KEY_NAME)));
                 s.setArtist_id(c.getLong(c.getColumnIndex(KEY_ARTIST_ID)));
-
+                s.setGenre_id(c.getLong(c.getColumnIndex(KEY_GENRE_ID)));
                 songs.add(s);
             } while (c.moveToNext());
 
@@ -508,6 +452,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+    public int updatePlaylist(Playlist playlist){
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, playlist.getName());//menjam KEY_NAME odnosno naziv artista
+
+        // updating row
+        return db.update(TABLE_PLAYLISTS, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(playlist.getId()) }); //ID OSTAJE ISTI JER JE VEC RANIJE PRI CITANJU IZ TABELE UNET U OBJEKAT? ZATO MENJA PREKO ID-a
+
+    }
+
     //----------------------------------------------------------------------------------------------
     //------------------------------------------------------------- REMOVE -------------------------
 
@@ -524,6 +478,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void removeSong(long s_id){
         db.delete(TABLE_SONGS, KEY_ID + " = ?",
                 new String[] { String.valueOf(s_id)});
+    }
+
+    public void removePlaylist(long pl_id){
+        db.delete(TABLE_PLAYLISTS, KEY_ID + " = ?",
+                new String[] { String.valueOf(pl_id)});
     }
 
     //----------------------------------------------------------------------------------------------
@@ -580,6 +539,101 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return g;
     }
+
+
+    //----------------------------------------------------------------------------------------------
+    //------------------------------------------------------------- GET Elements by ID -------------
+
+    public ArrayList<Artist> getArtistsByGenre(long genre_id){
+
+        ArrayList<Artist> artists = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_ARTISTS + " WHERE "
+                + KEY_GENRE_ID + " = " + genre_id;
+        //Alternative to use selectionArgs in rawQuery
+        //String selectQuery = "SELECT  * FROM " + TABLE_ACTORS + " WHERE "
+        //        + KEY_ID + " = ?";
+
+        Log.e(LOG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        //If using selectionArgs, the number of passed strings must match the number of ? characters
+        //within selectQuery string
+        //Cursor c = db.rawQuery(selectQuery, new String[]{Long.toString(actor_id)});
+
+        if(c.moveToFirst()){
+            do{
+                Artist a = new Artist();
+                a.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                a.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+                a.setGenre_id(c.getLong(c.getColumnIndex(KEY_GENRE_ID)));
+
+                artists.add(a);
+            } while (c.moveToNext());
+
+        }
+        return artists;
+    }
+
+    public ArrayList<Song> getSongsByArtist(long artist_id){
+
+        ArrayList<Song> songs = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_SONGS + " WHERE "
+                + KEY_ARTIST_ID + " = " + artist_id;
+        //Alternative to use selectionArgs in rawQuery
+        //String selectQuery = "SELECT  * FROM " + TABLE_ACTORS + " WHERE "
+        //        + KEY_ID + " = ?";
+
+        Log.e(LOG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        //If using selectionArgs, the number of passed strings must match the number of ? characters
+        //within selectQuery string
+        //Cursor c = db.rawQuery(selectQuery, new String[]{Long.toString(actor_id)});
+
+        if(c.moveToFirst()){
+            do{
+                Song s = new Song();
+                s.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                s.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+                s.setArtist_id(c.getLong(c.getColumnIndex(KEY_ARTIST_ID)));
+
+                songs.add(s);
+            } while (c.moveToNext());
+
+        }
+        return songs;
+    }
+
+    public ArrayList<Song> getSongsByGenre(long genre_id){
+
+        ArrayList<Song> songs = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_SONGS + " WHERE "
+                + KEY_GENRE_ID + " = " + genre_id;
+        //Alternative to use selectionArgs in rawQuery
+        //String selectQuery = "SELECT  * FROM " + TABLE_ACTORS + " WHERE "
+        //        + KEY_ID + " = ?";
+
+        Log.e(LOG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        //If using selectionArgs, the number of passed strings must match the number of ? characters
+        //within selectQuery string
+        //Cursor c = db.rawQuery(selectQuery, new String[]{Long.toString(actor_id)});
+
+        if(c.moveToFirst()){
+            do{
+                Song s = new Song();
+                s.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                s.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+                s.setArtist_id(c.getLong(c.getColumnIndex(KEY_ARTIST_ID)));
+                s.setGenre_id(c.getLong(c.getColumnIndex(KEY_GENRE_ID)));
+                songs.add(s);
+            } while (c.moveToNext());
+
+        }
+        return songs;
+    }
+
 
 
     // closing database

@@ -7,6 +7,7 @@ public class Song {
     long id;
     String name;
     long artist_id;
+    long genre_id;
 
     //Public konstruktor bez parametara za kreiranje reference
     public Song(){
@@ -14,18 +15,18 @@ public class Song {
     }
 
     //konstruktor sa parametrima cime cu kreirati odgovarajuci objekat
-    public Song(String name,  long artist_id){
+    public Song(String name,  long artist_id, long genre_id){
         this.name = name;
         this.artist_id = artist_id;
+        this.genre_id = genre_id;
 
     }
 
-    //ZASTO JE OVAJ KONSTRUKTOR DRUGACIJI??????? SA I BEZ ID???????????????
-    public Song(long id, String name, long artist_id){
+    public Song(long id, String name, long artist_id, long genre_id){
         this.id = id;
         this.name = name;
         this.artist_id = artist_id;
-
+        this.genre_id = genre_id;
     }
 
     public void setId(long id) {
@@ -49,5 +50,11 @@ public class Song {
         return this.artist_id;
     }
 
+    public void setGenre_id(long genre_id) {
+        this.genre_id = genre_id;
+    }
+    public long getGenre_id(){
+        return this.genre_id;
+    }
 
 }

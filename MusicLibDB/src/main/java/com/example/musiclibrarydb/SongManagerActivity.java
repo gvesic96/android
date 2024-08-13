@@ -161,6 +161,7 @@ public class SongManagerActivity extends AppCompatActivity {
                             databaseHandler.updateSong(el);
                             allSongs = databaseHandler.getAllSongs();
                             loadSongSpinner(allSongs);
+                            break;
                         }
                     }
                 }
@@ -221,6 +222,18 @@ public class SongManagerActivity extends AppCompatActivity {
         return fetchedID;
     }
 
+    long getGenreID(String selectedArtistName){
+        long fetchedID = 0;
+        for(Artist el:availableArtists){
+            if(el.getName().equals(selectedArtistName)){
+                fetchedID=el.getGenre_id();
+                break;
+            }
+        }
+
+        return fetchedID;
+    }
+
     void goToSelectorActivity(){
         Intent intent = new Intent(SongManagerActivity.this, SelectorActivity.class);
         setResult(RESULT_OK, intent);
@@ -240,6 +253,7 @@ public class SongManagerActivity extends AppCompatActivity {
         Song s = new Song();
         s.setName(etAddSong.getText().toString());
         s.setArtist_id(getArtistID(spnAvailableArtists.getSelectedItem().toString()));
+        s.setGenre_id(getGenreID(spnAvailableArtists.getSelectedItem().toString()));
         databaseHandler.createSong(s);
 
         //refresh all artists list
