@@ -11,9 +11,6 @@ import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.musiclibrarydb.sqlite.helper.DatabaseHandler;
 import com.example.musiclibrarydb.sqlite.model.Artist;
@@ -29,7 +26,7 @@ public class PlaylistManagerActivity extends AppCompatActivity {
     private ArrayList<Genre> genresPL;
     private ArrayList<Artist> artistsPL;
     private ArrayList<Song> songsPL;
-
+    private ArrayList<Song> songsInPL;
 
     DatabaseHandler databaseHandler;
 
@@ -92,6 +89,43 @@ public class PlaylistManagerActivity extends AppCompatActivity {
 
         genresPL = databaseHandler.getAllGenres();
         loadGenresPLSpn(genresPL);
+
+
+        btnPutSongPL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String selectedSong = readSpinner(spnAvailableSongsPL);
+                String selectedPlaylist = readSpinner(spnPlaylists);
+                Song s = new Song();
+                Playlist pl = new Playlist();
+                if(!selectedSong.equals("") && !selectedPlaylist.equals("")){
+                    for(Song elSong:songsPL){
+                        if(elSong.getName().equals(selectedSong)){
+                            s=elSong;
+                            break;
+                        }
+                    }
+                    for(Playlist elPL:allPlaylists){
+                        if(elPL.getName().equals(selectedPlaylist)){
+                            pl=elPL;
+                            break;
+                        }
+                    }
+                    databaseHandler.createPlaylistEntry(pl, s);
+                    ArrayList<Song> songIDs = databaseHandler.getSongsByPlaylist(pl.getId());
+                    ArrayList<Song> fetchedSongs = new ArrayList<>();
+                    for(Song el:songIDs){
+                        Song song = databaseHandler.getSong(el.getId());
+                        fetchedSongs.add(song);
+                    }
+                    songsInPL = fetchedSongs;
+                    loadSongsInPLSpn(songsInPL);
+
+                }
+
+            }
+        });
+
 
 
         spnArtistsPL.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -178,6 +212,23 @@ public class PlaylistManagerActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String selectedPlaylist = readSpinner(spnPlaylists);
                 etEditAddPlaylist.setText(selectedPlaylist);
+                if(!selectedPlaylist.equals("")){
+                    Playlist pl;
+                    for(Playlist elPL:allPlaylists){
+                        if(elPL.getName().equals(selectedPlaylist)){
+                            pl=elPL;
+                            ArrayList<Song> songIDs = databaseHandler.getSongsByPlaylist(pl.getId());
+                            ArrayList<Song> fetchedSongs = new ArrayList<>();
+                            for(Song el:songIDs){
+                                Song song = databaseHandler.getSong(el.getId());
+                                fetchedSongs.add(song);
+                            }
+                            songsInPL = fetchedSongs;
+                            loadSongsInPLSpn(songsInPL);
+                            break;
+                        }
+                    }
+                }
 
             }
 
@@ -348,6 +399,21 @@ public class PlaylistManagerActivity extends AppCompatActivity {
 
         // attaching data adapter to spinner
         spnAvailableSongsPL.setAdapter(dataAdapter);
+    }
+
+    void loadSongsInPLSpn(ArrayList<Song> songs){
+        ArrayList<String> songNames = new ArrayList<>();
+        for (Song el : songs){
+            songNames.add(el.getName());
+        }
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, songNames);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spnSongsInPL.setAdapter(dataAdapter);
     }
 
 }

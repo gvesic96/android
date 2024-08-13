@@ -248,51 +248,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * Creating a playlist entry - 1 entry is one row in PLAYLIST_ENTRIES TABLE
      */
     public long createPlaylistEntry(Playlist playlist, Song song) {
-        //ova metoda
+
         ContentValues values = new ContentValues();
 
-        values.put(KEY_PLAYLIST_ID, getPlaylistID(playlist.getName()));
-        values.put(KEY_SONG_ID, getSongID(song.getName()));
+        values.put(KEY_PLAYLIST_ID, playlist.getId());
+        values.put(KEY_SONG_ID, song.getId());
 
         // insert row
-        long playlist_id = db.insert(TABLE_PLAYLIST_ENTRIES, null, values);
+        long plEntry_id = db.insert(TABLE_PLAYLIST_ENTRIES, null, values);
 
 
-        return playlist_id;
-    }
-
-    public long getPlaylistID(String playlistName){
-
-        String selectQuery = "SELECT * FROM " + TABLE_PLAYLISTS + " WHERE "
-                + KEY_NAME + "=" + playlistName;
-
-        Log.e(LOG, selectQuery);
-        Cursor c = db.rawQuery(selectQuery, null);
-        if (c != null)
-            c.moveToFirst();
-
-
-        long fetchedID = 1;
-        fetchedID = c.getInt(c.getColumnIndex(KEY_ID));
-
-        return fetchedID;
-    }
-
-    public long getSongID(String songName){
-
-        String selectQuery = "SELECT * FROM " + TABLE_SONGS + " WHERE "
-                + KEY_NAME + "=" + songName;
-
-        Log.e(LOG, selectQuery);
-        Cursor c = db.rawQuery(selectQuery, null);
-        if (c != null)
-            c.moveToFirst();
-
-
-        long fetchedID = 1;
-        fetchedID = c.getInt(c.getColumnIndex(KEY_ID));
-
-        return fetchedID;
+        return plEntry_id;
     }
 
 
@@ -540,6 +506,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return g;
     }
 
+    public Song getSong(long song_id){
+
+        String selectQuery = "SELECT  * FROM " + TABLE_SONGS + " WHERE "
+                + KEY_ID + " = " + song_id;
+        //Alternative to use selectionArgs in rawQuery
+        //String selectQuery = "SELECT  * FROM " + TABLE_ACTORS + " WHERE "
+        //        + KEY_ID + " = ?";
+
+        Log.e(LOG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        //If using selectionArgs, the number of passed strings must match the number of ? characters
+        //within selectQuery string
+        //Cursor c = db.rawQuery(selectQuery, new String[]{Long.toString(actor_id)});
+
+        if (c != null)
+            c.moveToFirst();
+
+        //create actor based on data read from a database
+        Song s = new Song();
+        s.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+        s.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+        s.setArtist_id(c.getLong(c.getColumnIndex(KEY_ARTIST_ID)));
+        s.setGenre_id(c.getLong(c.getColumnIndex(KEY_GENRE_ID)));
+        return s;
+    }
+
 
     //----------------------------------------------------------------------------------------------
     //------------------------------------------------------------- GET Elements by ID -------------
@@ -596,7 +589,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 s.setId(c.getInt(c.getColumnIndex(KEY_ID)));
                 s.setName(c.getString(c.getColumnIndex(KEY_NAME)));
                 s.setArtist_id(c.getLong(c.getColumnIndex(KEY_ARTIST_ID)));
-
+                s.setGenre_id(c.getLong(c.getColumnIndex(KEY_GENRE_ID)));
                 songs.add(s);
             } while (c.moveToNext());
 
@@ -634,7 +627,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return songs;
     }
 
+    public ArrayList<Song> getSongsByPlaylist(long playlist_id){
 
+        ArrayList<Song> songs = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_PLAYLIST_ENTRIES + " WHERE "
+                + KEY_PLAYLIST_ID + " = " + playlist_id;
+        //Alternative to use selectionArgs in rawQuery
+        //String selectQuery = "SELECT  * FROM " + TABLE_ACTORS + " WHERE "
+        //        + KEY_ID + " = ?";
+
+        Log.e(LOG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        //If using selectionArgs, the number of passed strings must match the number of ? characters
+        //within selectQuery string
+        //Cursor c = db.rawQuery(selectQuery, new String[]{Long.toString(actor_id)});
+
+        if(c.moveToFirst()){
+            do{
+                Song s = new Song();
+                s.setId(c.getInt(c.getColumnIndex(KEY_SONG_ID)));
+
+                songs.add(s);
+            } while (c.moveToNext());
+
+        }
+        return songs;
+    }
 
     // closing database
     public void closeDB() {
