@@ -451,6 +451,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[] { String.valueOf(pl_id)});
     }
 
+    //TESTING TESTING ---------------------------------------------------- TESTING -----------------
+    public void removePlaylistEntry(long pl_id, long song_id){
+        db.delete(TABLE_PLAYLIST_ENTRIES, KEY_PLAYLIST_ID + " = ?" + " AND " + KEY_SONG_ID + " = ?",
+                new String[] { String.valueOf(pl_id), String.valueOf(song_id)});
+    }
+
     //----------------------------------------------------------------------------------------------
     //------------------------------------------------------------- GET SINGLE ELEMENT -------------
 

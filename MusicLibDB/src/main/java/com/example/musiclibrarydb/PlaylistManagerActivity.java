@@ -56,7 +56,7 @@ public class PlaylistManagerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_playlist_manager);
 
         intent = getIntent();
-        //PlaylistManagerActivity.this.username = (String) intent.getExtras().getString(MainActivity.USERNAME_MESSAGE);
+
         PlaylistManagerActivity.this.user_id = (long) intent.getExtras().getLong(SelectorActivity.USER_ID_MESSAGE);
 
         databaseHandler = new DatabaseHandler(getApplicationContext());
@@ -84,11 +84,41 @@ public class PlaylistManagerActivity extends AppCompatActivity {
         loadPlaylistSpinner(allPlaylists);
         if(spnPlaylists.getSelectedItem() != null) {
             etEditAddPlaylist.setText(spnPlaylists.getSelectedItem().toString());
-
+            loadPlaylist(spnPlaylists.getSelectedItem().toString()); // OVDE SAM UCITAO SADRZAJ PLAYLISTE INICIJALNO PRI POKRETANJU
+            //pesme se sada nalaze u songsInPL
         }
 
         genresPL = databaseHandler.getAllGenres();
         loadGenresPLSpn(genresPL);
+
+
+
+        btnRemoveSongPL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String selectedPlaylist = readSpinner(spnPlaylists);
+                String selectedSong = readSpinner(spnSongsInPL);
+                if(!selectedSong.equals("") && !selectedPlaylist.equals("")){
+                    long pl_id=0;
+                    long song_id=0;
+                    for(Playlist elPL:allPlaylists){
+                        if(elPL.getName().equals(selectedPlaylist)){
+                            pl_id=elPL.getId();
+                            break;
+                        }
+                    }
+                    for(Song elS:songsInPL){
+                        if(elS.getName().equals(selectedSong)){
+                            song_id=elS.getId();
+                            break;
+                        }
+                    }
+                    if(pl_id!=0 && song_id!=0) databaseHandler.removePlaylistEntry(pl_id, song_id);
+                    loadPlaylist(selectedPlaylist);
+
+                }
+            }
+        });
 
 
         btnPutSongPL.setOnClickListener(new View.OnClickListener() {
@@ -213,21 +243,7 @@ public class PlaylistManagerActivity extends AppCompatActivity {
                 String selectedPlaylist = readSpinner(spnPlaylists);
                 etEditAddPlaylist.setText(selectedPlaylist);
                 if(!selectedPlaylist.equals("")){
-                    Playlist pl;
-                    for(Playlist elPL:allPlaylists){
-                        if(elPL.getName().equals(selectedPlaylist)){
-                            pl=elPL;
-                            ArrayList<Song> songIDs = databaseHandler.getSongsByPlaylist(pl.getId());
-                            ArrayList<Song> fetchedSongs = new ArrayList<>();
-                            for(Song el:songIDs){
-                                Song song = databaseHandler.getSong(el.getId());
-                                fetchedSongs.add(song);
-                            }
-                            songsInPL = fetchedSongs;
-                            loadSongsInPLSpn(songsInPL);
-                            break;
-                        }
-                    }
+                    loadPlaylist(selectedPlaylist);
                 }
 
             }
@@ -311,6 +327,24 @@ public class PlaylistManagerActivity extends AppCompatActivity {
         Intent intent = new Intent(PlaylistManagerActivity.this, SelectorActivity.class);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    void loadPlaylist(String selectedPlaylist){
+        Playlist pl;
+        for(Playlist elPL:allPlaylists){
+            if(elPL.getName().equals(selectedPlaylist)){
+                pl=elPL;
+                ArrayList<Song> songIDs = databaseHandler.getSongsByPlaylist(pl.getId());
+                ArrayList<Song> fetchedSongs = new ArrayList<>();
+                for(Song el:songIDs){
+                    Song song = databaseHandler.getSong(el.getId());
+                    fetchedSongs.add(song);
+                }
+                songsInPL = fetchedSongs;
+                loadSongsInPLSpn(songsInPL);
+                break;
+            }
+        }
     }
 
     void addPlaylist(){
