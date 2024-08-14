@@ -101,7 +101,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //Playlists table create statement
     private static final String CREATE_TABLE_PLAYLIST_ENTRIES = "CREATE TABLE IF NOT EXISTS "
             + TABLE_PLAYLIST_ENTRIES + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
-            + KEY_PLAYLIST_ID + " INTEGER," + KEY_SONG_ID + " INTEGER" + ")";
+            + KEY_PLAYLIST_ID + " INTEGER," + KEY_SONG_ID + " INTEGER," + KEY_GENRE_ID + " INTEGER,"
+            + KEY_ARTIST_ID + " INTEGER"+ ")";
 
 
     @Override
@@ -253,6 +254,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         values.put(KEY_PLAYLIST_ID, playlist.getId());
         values.put(KEY_SONG_ID, song.getId());
+        values.put(KEY_GENRE_ID, song.getGenre_id());
+        values.put(KEY_ARTIST_ID, song.getArtist_id());
 
         // insert row
         long plEntry_id = db.insert(TABLE_PLAYLIST_ENTRIES, null, values);
@@ -434,24 +437,38 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void removeGenre(long g_id){
         db.delete(TABLE_GENRES, KEY_ID + " = ?",
                 new String[] { String.valueOf(g_id)});
+        db.delete(TABLE_ARTISTS, KEY_GENRE_ID + " = ?",
+                new String[] { String.valueOf(g_id)});
+        db.delete(TABLE_SONGS, KEY_GENRE_ID + " = ?",
+                new String[] { String.valueOf(g_id)});
+        db.delete(TABLE_PLAYLIST_ENTRIES,  KEY_GENRE_ID + " = ?",
+                new String[] { String.valueOf(g_id)});
     }
 
     public void removeArtist(long a_id){
         db.delete(TABLE_ARTISTS, KEY_ID + " = ?",
+                new String[] { String.valueOf(a_id)});
+        db.delete(TABLE_SONGS, KEY_ARTIST_ID + " = ?",
+                new String[] { String.valueOf(a_id)});
+        db.delete(TABLE_PLAYLIST_ENTRIES,  KEY_ARTIST_ID + " = ?",
                 new String[] { String.valueOf(a_id)});
     }
 
     public void removeSong(long s_id){
         db.delete(TABLE_SONGS, KEY_ID + " = ?",
                 new String[] { String.valueOf(s_id)});
+        db.delete(TABLE_PLAYLIST_ENTRIES,  KEY_SONG_ID + " = ?",
+                new String[] { String.valueOf(s_id)});
     }
 
     public void removePlaylist(long pl_id){
         db.delete(TABLE_PLAYLISTS, KEY_ID + " = ?",
                 new String[] { String.valueOf(pl_id)});
+        db.delete(TABLE_PLAYLIST_ENTRIES, KEY_PLAYLIST_ID + " = ?" ,
+                new String[] { String.valueOf(pl_id)});
     }
 
-    //TESTING TESTING ---------------------------------------------------- TESTING -----------------
+    //deleting playlist entry
     public void removePlaylistEntry(long pl_id, long song_id){
         db.delete(TABLE_PLAYLIST_ENTRIES, KEY_PLAYLIST_ID + " = ?" + " AND " + KEY_SONG_ID + " = ?",
                 new String[] { String.valueOf(pl_id), String.valueOf(song_id)});

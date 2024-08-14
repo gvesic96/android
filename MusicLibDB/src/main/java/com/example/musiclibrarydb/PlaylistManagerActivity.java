@@ -56,7 +56,6 @@ public class PlaylistManagerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_playlist_manager);
 
         intent = getIntent();
-
         PlaylistManagerActivity.this.user_id = (long) intent.getExtras().getLong(SelectorActivity.USER_ID_MESSAGE);
 
         databaseHandler = new DatabaseHandler(getApplicationContext());
