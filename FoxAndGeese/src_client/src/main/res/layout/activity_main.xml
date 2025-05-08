@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/tvOutputMessages"
+            android:layout_width="360dp"
+            android:layout_height="124dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="31dp"
+            android:layout_height="19dp"
+            android:layout_marginTop="52dp"
+            android:layout_marginEnd="8dp"
+            android:text="Ime:"
+            app:layout_constraintEnd_toStartOf="@+id/etNickname"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnConnect" />
+
+        <EditText
+            android:id="@+id/etNickname"
+            android:layout_width="190dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Name"
+            app:layout_constraintEnd_toStartOf="@+id/btnEnterRoom"
+            app:layout_constraintTop_toBottomOf="@+id/btnConnect" />
+
+        <Button
+            android:id="@+id/btnEnterRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="16dp"
+            android:text="LOG IN"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnConnect" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="44dp"
+            android:text="Players:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etNickname" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="214dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.437"
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/etNickname"
+            app:layout_constraintVertical_bias="0.003" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="180dp"
+            android:text="Server IP:"
+            app:layout_constraintEnd_toStartOf="@+id/etMessage"
+            app:layout_constraintHorizontal_bias="0.48"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvOutputMessages" />
+
+        <EditText
+            android:id="@+id/etMessage"
+            android:layout_width="262dp"
+            android:layout_height="67dp"
+            android:layout_marginTop="152dp"
+            android:ems="10"
+            android:inputType="text"
+            android:text="10.0.2.2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.711"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvOutputMessages" />
+
+        <Button
+            android:id="@+id/btnConnect"
+            android:layout_width="249dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="240dp"
+            android:text="Connect"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvOutputMessages" />
+
+        <Button
+            android:id="@+id/btnGameRequest"
+            android:layout_width="183dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="140dp"
+            android:text="PLAY GAME"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner"
+            app:layout_constraintVertical_bias="0.592" />
+
+        <TextView
+            android:id="@+id/tvGameReq"
+            android:layout_width="305dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="84dp"
+            android:text="Game request..."
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnGameRequest"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/btnGameReqNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="36dp"
+            android:text="NO"
+            app:layout_constraintEnd_toStartOf="@+id/btnGameReqYes"
+            app:layout_constraintTop_toBottomOf="@+id/tvGameReq" />
+
+        <Button
+            android:id="@+id/btnGameReqYes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="YES"
+            app:layout_constraintEnd_toEndOf="@+id/tvGameReq"
+            app:layout_constraintTop_toBottomOf="@+id/tvGameReq" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
